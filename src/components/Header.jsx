@@ -25,17 +25,13 @@ const Header = () => {
             ))}
           </nav>
 
-          {/* Login and Signup Buttons */}
-          <div className="flex items-center space-x-4">
-           <Link to='/auth'>
-            <Button variant="outline" className="text-black font-inter">
-              Log In
-            </Button></Link>
-           <Link to='/signup'>
-           <Button className="bg-gray-950  text-white font-inter hover:bg-gray-800">
-              Sign Up
-            </Button>
-           </Link>
+          {/* Get Started Button */}
+          <div>
+            <Link to='/auth'>
+              <Button className="bg-black text-white font-inter hover:bg-gray-800">
+                Get Started
+              </Button>
+            </Link>
           </div>
         </div>
       </div>

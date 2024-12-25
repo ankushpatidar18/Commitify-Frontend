@@ -1,6 +1,7 @@
 import React from 'react';
 import { Button } from "@/components/ui/button"
 import { motion } from "framer-motion"
+import { Link } from 'react-router-dom';
 
 const Body = () => {
   const quotes = [
@@ -53,9 +54,11 @@ const Body = () => {
           whileHover={{ scale: 1.05 }}
           whileTap={{ scale: 0.95 }}
         >
+          <Link to='/auth'>
           <Button className="bg-[#8046F3] text-white font-inter text-lg px-8 py-6 rounded-full hover:bg-[#6A35D9] transition duration-300">
             Get Started
           </Button>
+          </Link>
         </motion.div>
       </motion.div>
     </div>
