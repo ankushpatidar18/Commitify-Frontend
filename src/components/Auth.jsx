@@ -4,10 +4,11 @@ import { useEffect } from 'react';
 import axios from 'axios';
 import useUserStore from '../stores/useUserStore'; 
 import { Button } from "@/components/ui/button"
-import { Card, CardHeader, CardTitle, CardDescription, CardContent, CardFooter } from "@/components/ui/card"
+import { Card, CardHeader, CardTitle,  CardContent, CardFooter } from "@/components/ui/card"
 import { ChromeIcon as Google } from 'lucide-react'
 
 const Auth = () => {
+  //search params - when we have query parameters
   const [searchParams] = useSearchParams();
   const navigate = useNavigate();
   
@@ -15,29 +16,41 @@ const Auth = () => {
   const { setUser, setToken } = useUserStore();
 
   useEffect(() => {
-    const token = searchParams.get('token');
-    if (token) {
-      // Store token in both localStorage and Zustand
-      localStorage.setItem('authToken', token);
-      setToken(token);
+    
       
+    // Check both URL params and localStorage for token
+    const urlToken = searchParams.get('token');
+    const storedToken = localStorage.getItem('authToken');
+    
+    const fetchUserData = (token) => {
       const apiUrl = import.meta.env.VITE_API_URL || 'http://localhost:3000';
       
-      // Fetch user data
       axios.get(`${apiUrl}/auth/user`, {
         headers: { Authorization: `Bearer ${token}` },
       })
       .then((response) => {
-        // Store user data in Zustand
         setUser(response.data);
         navigate('/dashboard');
       })
       .catch((error) => {
         console.error('Auth error:', error);
-        navigate('/login'); // Redirect to login on error
-      });
-    }
-  }, [searchParams, navigate, setUser, setToken]);
+        localStorage.removeItem('authToken');
+        setToken(null);
+        setUser(null);
+        navigate('/login');
+      })
+
+    };
+  
+    if (urlToken) {
+      localStorage.setItem('authToken', urlToken);
+      setToken(urlToken);
+      fetchUserData(urlToken);
+    } else if (storedToken) {
+      setToken(storedToken);
+      fetchUserData(storedToken);
+    } 
+  }, [searchParams, navigate, setUser, setToken]); // Added setLoading to dependencies
 
   const handleLogin = () => {
     try {

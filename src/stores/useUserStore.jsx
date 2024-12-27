@@ -1,28 +1,37 @@
 import { create } from 'zustand';
+import { persist } from 'zustand/middleware';
 
-const useUserStore = create((set) => ({
-  user: null,
-  isAuthenticated: false,
-  token: null,
-  
-  // Set user data
-  setUser: (userData) => 
-    set({ 
-      user: userData,
-      isAuthenticated: true 
-    }),
-  
-  // Set authentication token
-  setToken: (token) => 
-    set({ token }),
-  
-  // Clear all auth data (logout)
-  logout: () => 
-    set({ 
+// In useUserStore.js
+const useUserStore = create(
+  persist(
+    (set) => ({
       user: null,
       isAuthenticated: false,
-      token: null 
+      token: null,
+      
+      setUser: (userData) => 
+        set({ 
+          user: userData,
+          isAuthenticated: !!userData
+        }),
+      
+      setToken: (token) => 
+        set({ token }),
+      
+        
+      logout: () => {
+        localStorage.removeItem('authToken');
+        set({ 
+          user: null,
+          isAuthenticated: false,
+          token: null
+        }, true);
+      },
     }),
-}));
+    {
+      name: 'user-storage',
+    }
+  )
+);
 
 export default useUserStore;

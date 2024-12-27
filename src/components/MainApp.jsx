@@ -6,6 +6,7 @@ import Dashboard from './Dashboard';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import Auth from './Auth';
+import CreateCommitment from './CreateCommitment';
 
 const MainApp = () => {
     const appRouter = createBrowserRouter([
@@ -24,7 +25,11 @@ const MainApp = () => {
               {
                 path: "/dashboard",
                 element: <Dashboard />
-            }
+              },
+              {
+                path: "/createcommitment",
+                element: <CreateCommitment />
+              }
               
           ]
       }
