@@ -1,12 +1,11 @@
 import { Link, Navigate } from 'react-router-dom';
 import useUserStore from '../stores/useUserStore';
+import CommitmentCalendar from './CommitmentCalendar';
 
 const Dashboard = () => {
-  const { user, isAuthenticated, logout } = useUserStore();
+  const { user,logout } = useUserStore();
 
-  if (!isAuthenticated) {
-    return <Navigate to="/auth" />;
-  }
+
 
   return (
     <div>
@@ -16,6 +15,9 @@ const Dashboard = () => {
       <Link to='/createcommitment'>
       <button>create commitment</button>
       </Link>
+      <div>
+        <CommitmentCalendar/>
+      </div>
 
     </div>
   );
