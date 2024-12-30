@@ -19,18 +19,18 @@ const localizer = dateFnsLocalizer({
 });
 
 const CommitmentCalendars = () => {
-  const [commitments, setCommitments] = useState([]); // State to store fetched commitments
-  const [openCommitment, setOpenCommitment] = useState(null); // Track which calendar is open
+  const [commitments, setCommitments] = useState([]); 
+  const [openCommitment, setOpenCommitment] = useState(null); 
 
-  // Fetch commitments from the backend
+  
   useEffect(() => {
     const fetchCommitments = async () => {
       try {
-        const token = localStorage.getItem('authToken'); // Token for authorization
+        const token = localStorage.getItem('authToken'); 
         const response = await axios.get('http://localhost:3000/commitment', {
           headers: { Authorization: `Bearer ${token}` },
         });
-        setCommitments(response.data); // Set commitments to state
+        setCommitments(response.data);
       } catch (error) {
         console.error('Error fetching commitments:', error);
       }

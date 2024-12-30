@@ -8,6 +8,7 @@ import 'react-toastify/dist/ReactToastify.css';
 import Auth from './Auth';
 import CreateCommitment from './CreateCommitment';
 import PrivateRoute from './PrivateRoute';
+import Leaderboard from './Leaderboard';
 
 const MainApp = () => {
     const appRouter = createBrowserRouter([
@@ -36,6 +37,14 @@ const MainApp = () => {
                 element: (
                   <PrivateRoute>
                 <CreateCommitment />
+                </PrivateRoute>
+                )
+              },
+              {
+                path: "/leaderboard",
+                element: (
+                  <PrivateRoute>
+                <Leaderboard />
                 </PrivateRoute>
                 )
               }

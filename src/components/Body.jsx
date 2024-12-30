@@ -2,8 +2,13 @@ import React from 'react';
 import { Button } from "@/components/ui/button"
 import { motion } from "framer-motion"
 import { Link } from 'react-router-dom';
+import useUserStore from '@/stores/useUserStore';
+import Dashboard from './Dashboard';
 
 const Body = () => {
+  const {isAuthenticated} = useUserStore();
+  if(isAuthenticated)
+    return <Dashboard/>
   const quotes = [
     "Transform your habits, transform your life.",
     "Your goals, our commitment."

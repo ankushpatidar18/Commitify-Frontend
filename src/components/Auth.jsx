@@ -12,12 +12,10 @@ const Auth = () => {
   const [searchParams] = useSearchParams();
   const navigate = useNavigate();
   
-  // Get Zustand store actions
   const { setUser, setToken } = useUserStore();
 
   useEffect(() => {
     
-      
     // Check both URL params and localStorage for token
     const urlToken = searchParams.get('token');
     const storedToken = localStorage.getItem('authToken');
@@ -50,7 +48,7 @@ const Auth = () => {
       setToken(storedToken);
       fetchUserData(storedToken);
     } 
-  }, [searchParams, navigate, setUser, setToken]); // Added setLoading to dependencies
+  }, [searchParams, navigate, setUser, setToken]); 
 
   const handleLogin = () => {
     try {
