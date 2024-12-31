@@ -1,6 +1,7 @@
 // components/CreateCommitmentForm.jsx
 import React, { useState } from 'react';
 import axios from 'axios';
+import CommitmentCalendar from './CommitmentCalendar';
 
 const CreateCommitment = () => {
   const [formData, setFormData] = useState({
@@ -37,6 +38,7 @@ const CreateCommitment = () => {
   };
 
   return (
+    <>
     <form onSubmit={handleSubmit} className="p-6 bg-white rounded-lg shadow-md">
       <h2 className="text-2xl font-bold mb-4">Create Commitment</h2>
 
@@ -100,6 +102,10 @@ const CreateCommitment = () => {
         Create Commitment
       </button>
     </form>
+    <div>
+        <CommitmentCalendar/>
+      </div>
+    </>
   );
 };
 

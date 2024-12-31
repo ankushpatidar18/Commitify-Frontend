@@ -1,24 +1,34 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
+import useUserStore from '../stores/useUserStore';
 
 const Leaderboard = () => {
+  const { user, setRank } = useUserStore(); // Access user and setRank from the store
   const [users, setUsers] = useState([]);
 
   useEffect(() => {
     const fetchLeaderboard = async () => {
       try {
         const token = localStorage.getItem('authToken');
-const response = await axios.get('http://localhost:3000/leaderboard',{
-  headers: { 
-    Authorization: `Bearer ${token}`},
-});
+        const response = await axios.get('http://localhost:3000/leaderboard', {
+          headers: { Authorization: `Bearer ${token}` },
+        });
+        
         setUsers(response.data);
+
+        // Find the logged-in user's rank
+        const loggedInUser = response.data.find((u) => u._id === user?._id);
+        if (loggedInUser) {
+          const rank = response.data.indexOf(loggedInUser) + 1;
+          setRank(rank); // Update the rank in the store
+        }
       } catch (error) {
         console.error('Error fetching leaderboard:', error);
       }
     };
+
     fetchLeaderboard();
-  }, []);
+  }, [user, setRank]);
 
   return (
     <div className="container mx-auto">

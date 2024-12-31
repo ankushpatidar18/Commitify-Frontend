@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import { Calendar, dateFnsLocalizer } from 'react-big-calendar';
 import 'react-big-calendar/lib/css/react-big-calendar.css';
-import axios from 'axios';
 import { parseISO, format, parse, startOfWeek, getDay } from 'date-fns';
 import enUS from 'date-fns/locale/en-US';
+import useCommitmentStore from '../stores/useCommitmentStore';
 
 // Setup locales for date formatting
 const locales = {
@@ -19,45 +19,12 @@ const localizer = dateFnsLocalizer({
 });
 
 const CommitmentCalendars = () => {
-  const [commitments, setCommitments] = useState([]); 
-  const [openCommitment, setOpenCommitment] = useState(null); 
+  const { commitments, fetchCommitments, updateCommitmentStatus } = useCommitmentStore();
+  const [openCommitment, setOpenCommitment] = useState(null);
 
-  
   useEffect(() => {
-    const fetchCommitments = async () => {
-      try {
-        const token = localStorage.getItem('authToken'); 
-        const response = await axios.get('http://localhost:3000/commitment', {
-          headers: { Authorization: `Bearer ${token}` },
-        });
-        setCommitments(response.data);
-      } catch (error) {
-        console.error('Error fetching commitments:', error);
-      }
-    };
     fetchCommitments();
-  }, []);
-
-  const updateStatus = async (commitmentId, date, newStatus) => {
-    try {
-      const token = localStorage.getItem('authToken');
-      const response = await axios.patch(
-        `http://localhost:3000/commitment/${commitmentId}/daily-status`,
-        { date, status: newStatus },
-        { headers: { Authorization: `Bearer ${token}` } }
-      );
-      alert('Status updated successfully');
-      // Refresh commitments after update
-      setCommitments((prev) =>
-        prev.map((commitment) =>
-          commitment._id === commitmentId ? response.data : commitment
-        )
-      );
-    } catch (error) {
-      console.error('Error updating status:', error);
-      alert('Failed to update status');
-    }
-  };
+  }, [fetchCommitments]);
 
   return (
     <div className="p-4">
@@ -65,12 +32,11 @@ const CommitmentCalendars = () => {
         <p className="text-center text-gray-500">Loading commitments...</p>
       ) : (
         commitments.map((commitment) => {
-          // Convert dailyStatuses into events for the calendar
           const events = commitment.dailyStatuses.map((status) => ({
             title: `${status.status}`,
             start: parseISO(status.date),
             end: parseISO(status.date),
-            status: status.status, // Custom property for event styling
+            status: status.status,
           }));
 
           return (
@@ -102,7 +68,7 @@ const CommitmentCalendars = () => {
                         <button
                           className="ml-2 px-2 py-1 text-sm bg-green-500 text-white rounded hover:bg-green-600"
                           onClick={() =>
-                            updateStatus(commitment._id, event.start, 'completed')
+                            updateCommitmentStatus(commitment._id, event.start, 'completed')
                           }
                         >
                           Mark Completed
@@ -110,7 +76,7 @@ const CommitmentCalendars = () => {
                         <button
                           className="ml-2 px-2 py-1 text-sm bg-red-500 text-white rounded hover:bg-red-600"
                           onClick={() =>
-                            updateStatus(commitment._id, event.start, 'canceled')
+                            updateCommitmentStatus(commitment._id, event.start, 'canceled')
                           }
                         >
                           Cancel
