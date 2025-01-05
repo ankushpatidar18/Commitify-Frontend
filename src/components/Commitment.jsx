@@ -1,9 +1,9 @@
-// components/CreateCommitmentForm.jsx
+
 import React, { useState } from 'react';
 import axios from 'axios';
-import CommitmentCalendar from './CommitmentCalendar';
 
-const CreateCommitment = () => {
+
+const Commitment = () => {
   const [formData, setFormData] = useState({
     name: '',
     frequency: 'one-time',
@@ -102,11 +102,8 @@ const CreateCommitment = () => {
         Create Commitment
       </button>
     </form>
-    <div>
-        <CommitmentCalendar/>
-      </div>
     </>
   );
 };
 
-export default CreateCommitment;
+export default Commitment;

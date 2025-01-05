@@ -17,7 +17,7 @@ const Header = () => {
           </div>
           </Link>
 
-          {/* Navigation Links */}
+          {!user && location.pathname === '/' && <>
           <nav className="hidden md:flex space-x-4">
             {['How it works', 'Our Mission', 'FAQ'].map((item) => (
               <Link
@@ -29,9 +29,7 @@ const Header = () => {
               </Link>
             ))}
           </nav>
-
-          {/* Get Started Button */}
-          { !user && location.pathname === '/' && (
+           
           <div>
             <Link to='/auth'>
               <Button className="bg-black text-white font-inter hover:bg-gray-800">
@@ -39,6 +37,27 @@ const Header = () => {
               </Button>
             </Link>
           </div>
+          </>} 
+          
+          { user && (
+            <nav className="hidden md:flex space-x-4">
+             <Link to="/dashboard"
+                className="opacity-80 text-black font-inter text-xs font-medium hover:underline transition duration-150 ease-in-out">
+               Dashboard
+              </Link>
+              <Link to="/leaderboard"
+                className="opacity-80 text-black font-inter text-xs font-medium hover:underline transition duration-150 ease-in-out">
+               Leaderboard
+              </Link>
+              <Link to="/commitment"
+                className="opacity-80 text-black font-inter text-xs font-medium hover:underline transition duration-150 ease-in-out">
+               Commitment
+              </Link>
+              <Link to="/challenges"
+                className="opacity-80 text-black font-inter text-xs font-medium hover:underline transition duration-150 ease-in-out">
+               Challenges
+              </Link>
+          </nav>
           )}
         </div>
       </div>

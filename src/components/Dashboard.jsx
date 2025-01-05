@@ -44,7 +44,7 @@ const Dashboard = () => {
 
         {/* Buttons */}
         <div className="flex flex-col space-y-4">
-          <Link to="/createcommitment">
+          <Link to="/commitment">
             <button className="w-full px-4 py-2 bg-blue-500 text-white rounded shadow hover:bg-blue-600">
               Create Commitment
             </button>
@@ -90,7 +90,7 @@ const Dashboard = () => {
               <p>Total Commitments: <span className="font-semibold">{commitments.length}</span></p>
               <p>Completed Commitments: <span className="font-semibold">{getCompletedCount()}</span></p>
               <p>Pending Commitments: <span className="font-semibold">{getPendingCount()}</span></p>
-              <p>Cancelled Commitments: <span className="font-semibold">{getCancelledCount()}</span></p>
+              <p>Failed Commitments: <span className="font-semibold">{getCancelledCount()}</span></p>
             </div>
             {/* Success Ratio */}
             <div className="w-1/2 flex justify-center">
@@ -112,7 +112,7 @@ const Dashboard = () => {
               <p>Total Challenges: <span className="font-semibold">5</span></p>
               <p>Completed Challenges: <span className="font-semibold">3</span></p>
               <p>Pending Challenges: <span className="font-semibold">2</span></p>
-              <p>Cancelled Challenges: <span className="font-semibold">0</span></p>
+              <p>Failed Challenges: <span className="font-semibold">0</span></p>
             </div>
             {/* Success Ratio */}
             <div className="w-1/2 flex justify-center">

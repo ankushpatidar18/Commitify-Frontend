@@ -59,7 +59,7 @@ const useCommitmentStore = create((set, get) => ({
   getCompletedCount: () =>
     get().commitments.filter((commitment) => commitment.status === 'completed').length,
   getCancelledCount: () =>
-    get().commitments.filter((commitment) => commitment.status === 'cancelled').length,
+    get().commitments.filter((commitment) => commitment.status === 'failed').length,
 }));
 
 export default useCommitmentStore;

@@ -1,14 +1,17 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Button } from "@/components/ui/button"
 import { motion } from "framer-motion"
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import useUserStore from '@/stores/useUserStore';
-import Dashboard from './Dashboard';
 
 const Body = () => {
+  const navigate = useNavigate();
   const {isAuthenticated} = useUserStore();
-  if(isAuthenticated)
-    return <Dashboard/>
+  useEffect(() => {
+    if (isAuthenticated) {
+      navigate('/dashboard');
+    }
+  }, [isAuthenticated, navigate]);
   const quotes = [
     "Transform your habits, transform your life.",
     "Your goals, our commitment."

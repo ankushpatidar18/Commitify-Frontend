@@ -18,7 +18,7 @@ const localizer = dateFnsLocalizer({
   locales,
 });
 
-const CommitmentCalendars = () => {
+const CommitmentList = () => {
   const { commitments, fetchCommitments, updateCommitmentStatus } = useCommitmentStore();
   const [openCommitment, setOpenCommitment] = useState(null);
 
@@ -94,4 +94,4 @@ const CommitmentCalendars = () => {
   );
 };
 
-export default CommitmentCalendars;
+export default CommitmentList;
