@@ -2,15 +2,17 @@ import React, { useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import useUserStore from '../stores/useUserStore';
 import useCommitmentStore from '@/stores/useCommitmentStore';
+import useChallengeStore from '@/stores/useChallengeStore';
 
 const Dashboard = () => {
   const { user, logout,rank } = useUserStore();
   const currentDay = new Date().toLocaleDateString('en-US', { weekday: 'long' });
   const {commitments,fetchCommitments,getPendingCount, getCompletedCount, getCancelledCount} = useCommitmentStore();
-
+  const {challenges,fetchChallenges,getPendingcount, getCompletedcount, getCancelledcount} = useChallengeStore();
   useEffect(() => {
       fetchCommitments();
-    }, [fetchCommitments]);
+      fetchChallenges();
+    }, [fetchCommitments,fetchChallenges]);
   return (
     <div className="flex">
       {/* Left Block - 3/12 */}
@@ -31,7 +33,7 @@ const Dashboard = () => {
         {/* Commitments Overview */}
         <div className="bg-blue-100 p-4 rounded shadow">
           <p className="text-center text-lg font-semibold">
-            You have <span className="text-blue-600">{commitments.length}</span> commitments ongoing.
+            You have <span className="text-blue-600">{getPendingCount()}</span> commitments ongoing.
           </p>
         </div>
 
@@ -49,9 +51,11 @@ const Dashboard = () => {
               Create Commitment
             </button>
           </Link>
+          <Link to='/challenges'>
           <button className="w-full px-4 py-2 bg-purple-500 text-white rounded shadow hover:bg-purple-600">
             Join Challenges
           </button>
+          </Link>
           <button
             onClick={logout}
             className="w-full px-4 py-2 bg-red-500 text-white rounded shadow hover:bg-red-600"
@@ -109,16 +113,16 @@ const Dashboard = () => {
           <div className="flex items-center">
             {/* Left Info */}
             <div className="w-1/2 space-y-2">
-              <p>Total Challenges: <span className="font-semibold">5</span></p>
-              <p>Completed Challenges: <span className="font-semibold">3</span></p>
-              <p>Pending Challenges: <span className="font-semibold">2</span></p>
-              <p>Failed Challenges: <span className="font-semibold">0</span></p>
+              <p>Total Challenges: <span className="font-semibold">{challenges.length}</span></p>
+              <p>Completed Challenges: <span className="font-semibold">{getCompletedcount()}</span></p>
+              <p>Pending Challenges: <span className="font-semibold">{getPendingcount()}</span></p>
+              <p>Failed Challenges: <span className="font-semibold">{getCancelledcount()}</span></p>
             </div>
             {/* Success Ratio */}
             <div className="w-1/2 flex justify-center">
               <div className="relative">
                 <div className="w-32 h-32 rounded-full border-8 border-blue-500 flex items-center justify-center">
-                  <p className="text-lg font-bold">60%</p>
+                  <p className="text-lg font-bold">{(getCompletedcount()/(getCancelledcount()+getCompletedcount()))*100}%</p>
                 </div>
               </div>
             </div>

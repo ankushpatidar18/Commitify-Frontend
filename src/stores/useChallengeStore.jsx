@@ -1,7 +1,7 @@
 import {create} from 'zustand';
 import axios from 'axios';
 
-const useChallengeStore = create((set) => ({
+const useChallengeStore = create((set,get) => ({
   challenges: [],
   fetchChallenges: async () => {
     try {
@@ -42,11 +42,11 @@ const useChallengeStore = create((set) => ({
     }
   },
   // Computed properties for counts
-  getPendingCount: () =>
+  getPendingcount: () =>
     get().challenges.filter((challenge) => challenge.status === 'pending').length,
-  getCompletedCount: () =>
+  getCompletedcount: () =>
     get().challenges.filter((challenge) => challenge.status === 'completed').length,
-  getCancelledCount: () =>
+  getCancelledcount: () =>
     get().challenges.filter((challenge) => challenge.status === 'failed').length,
 }));
 
