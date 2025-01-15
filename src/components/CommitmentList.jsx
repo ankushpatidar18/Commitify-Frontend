@@ -76,7 +76,7 @@ const CommitmentList = () => {
                         <button
                           className="ml-2 px-2 py-1 text-sm bg-red-500 text-white rounded hover:bg-red-600"
                           onClick={() =>
-                            updateCommitmentStatus(commitment._id, event.start, 'canceled')
+                            updateCommitmentStatus(commitment._id, event.start, 'failed')
                           }
                         >
                           Cancel
