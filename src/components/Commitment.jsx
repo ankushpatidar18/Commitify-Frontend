@@ -1,68 +1,67 @@
-import React, { useState } from 'react';
-import axios from 'axios';
+import React, { useState } from "react"
+import axios from "axios"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Input } from "@/components/ui/input"
 import { Button } from "@/components/ui/button"
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
 import { Checkbox } from "@/components/ui/checkbox"
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover"
 import { format } from "date-fns"
-import { CalendarIcon, ChevronDownIcon, ChevronUpIcon } from 'lucide-react'
+import { CalendarIcon, ChevronDownIcon, ChevronUpIcon } from "lucide-react"
 import CustomCalendar from '../components/ui/calendar';
 
 const Commitment = () => {
   const [formData, setFormData] = useState({
-    name: '',
-    frequency: 'one-time',
+    name: "",
+    frequency: "one-time",
     weeklyDays: [],
-    endDate: '',
-  });
+    endDate: "",
+  })
 
-  const [isNameExpanded, setIsNameExpanded] = useState(false);
-  const [isFrequencyExpanded, setIsFrequencyExpanded] = useState(false);
-  const [isDurationExpanded, setIsDurationExpanded] = useState(false);
+  const [isNameExpanded, setIsNameExpanded] = useState(false)
+  const [isFrequencyExpanded, setIsFrequencyExpanded] = useState(false)
+  const [isDurationExpanded, setIsDurationExpanded] = useState(false)
 
   const handleChange = (e) => {
-    setFormData({ ...formData, [e.target.name]: e.target.value });
-  };
+    setFormData({ ...formData, [e.target.name]: e.target.value })
+  }
 
   const handleWeeklyDaysChange = (day) => {
     const updatedDays = formData.weeklyDays.includes(day)
       ? formData.weeklyDays.filter((d) => d !== day)
-      : [...formData.weeklyDays, day];
-    setFormData({ ...formData, weeklyDays: updatedDays });
-  };
+      : [...formData.weeklyDays, day]
+    setFormData({ ...formData, weeklyDays: updatedDays })
+  }
 
   const handleSubmit = async (e) => {
-    e.preventDefault();
+    e.preventDefault()
     try {
-      const token = localStorage.getItem('authToken');
-      await axios.post('http://localhost:3000/commitment/create', formData, {
+      const token = localStorage.getItem("authToken")
+      await axios.post("http://localhost:3000/commitment/create", formData, {
         headers: { Authorization: `Bearer ${token}` },
-      });
-      alert('Commitment created successfully');
-      setFormData({ name: '', frequency: 'one-time', weeklyDays: [], endDate: '' });
+      })
+      alert("Commitment created successfully")
+      setFormData({ name: "", frequency: "one-time", weeklyDays: [], endDate: "" })
     } catch (error) {
-      console.error('Error creating commitment:', error);
+      console.error("Error creating commitment:", error)
     }
-  };
+  }
 
   return (
     <div className="flex justify-center items-start min-h-screen bg-gradient-to-b from-gray-50 to-white p-6">
       <Card className="w-full max-w-4xl shadow-lg">
         <CardContent className="p-6">
-          <div className="flex">
+          <div className="flex flex-col md:flex-row">
             {/* Motivational Quote Card */}
-            <Card className="w-3/12 mr-6 flex items-center bg-[#F2EFEF]">
+            <Card className="w-full md:w-3/12 mb-6 md:mb-0 md:mr-6 flex items-center bg-[#F2EFEF]">
               <CardContent className="p-4">
-                <p className="text-2xl font-semibold font-poppin">
+                <p className="text-xl md:text-2xl font-semibold font-poppin text-center">
                   Commitment is what transforms a promise into reality.
                 </p>
               </CardContent>
             </Card>
 
             {/* Main Form Card */}
-            <div className="w-9/12">
+            <div className="w-full md:w-9/12">
               <CardHeader>
                 <CardTitle className="text-2xl font-semibold font-inter">Create Commitment</CardTitle>
                 <p className="text-base text-gray-700 font-poppin">Let us know what you want to commit to</p>
@@ -71,7 +70,7 @@ const Commitment = () => {
               <form onSubmit={handleSubmit} className="space-y-6">
                 {/* Name */}
                 <div>
-                  <div 
+                  <div
                     className="flex justify-between items-center p-3 bg-gray-100 rounded-md cursor-pointer"
                     onClick={() => setIsNameExpanded(!isNameExpanded)}
                   >
@@ -80,8 +79,8 @@ const Commitment = () => {
                   </div>
                   {isNameExpanded && (
                     <div className="mt-3 p-3 bg-white rounded-md shadow-sm">
-                      <div className="flex justify-between items-start">
-                        <div className="w-1/3">
+                      <div className="flex flex-col md:flex-row justify-between items-start">
+                        <div className="w-full md:w-1/3 mb-2 md:mb-0">
                           <p className="text-sm text-gray-600 font-poppin">Name your commitment</p>
                           <p className="text-sm text-gray-500 italic">Eg. "Doing Yoga"</p>
                         </div>
@@ -91,7 +90,7 @@ const Commitment = () => {
                           value={formData.name}
                           onChange={handleChange}
                           placeholder="Enter commitment name"
-                          className="w-2/3"
+                          className="w-full md:w-2/3"
                           required
                         />
                       </div>
@@ -101,7 +100,7 @@ const Commitment = () => {
 
                 {/* Frequency */}
                 <div>
-                  <div 
+                  <div
                     className="flex justify-between items-center p-3 bg-gray-100 rounded-md cursor-pointer"
                     onClick={() => setIsFrequencyExpanded(!isFrequencyExpanded)}
                   >
@@ -110,31 +109,39 @@ const Commitment = () => {
                   </div>
                   {isFrequencyExpanded && (
                     <div className="mt-3 p-3 bg-white rounded-md shadow-sm">
-                      <Select 
-                        onValueChange={(value) => setFormData({ ...formData, frequency: value })}
-                        value={formData.frequency}
-                      >
-                        <SelectTrigger className="w-full">
-                          <SelectValue placeholder="Select frequency" />
-                        </SelectTrigger>
-                        <SelectContent>
-                          <SelectItem value="one-time">One-Time</SelectItem>
-                          <SelectItem value="daily">Daily</SelectItem>
-                          <SelectItem value="weekly">Weekly</SelectItem>
-                        </SelectContent>
-                      </Select>
-
-                      {formData.frequency === 'weekly' && (
+                      <div className="flex flex-col md:flex-row justify-between items-start">
+                        <div className="w-full md:w-1/3 mb-2 md:mb-0">
+                          <p className="text-sm text-gray-600 font-poppin">Choose your frequency</p>
+                          <p className="text-sm text-gray-500 italic">Eg. "Daily"</p>
+                        </div>
+                        <div className="w-full md:w-2/3 flex flex-col md:flex-row space-y-2 md:space-y-0 md:space-x-2">
+                          {["one-time", "daily", "weekly"].map((freq) => (
+                            <Button
+                              key={freq}
+                              type="button"
+                              variant={formData.frequency === freq ? "default" : "outline"}
+                              className="w-full md:w-1/3 capitalize h-16 text-base flex items-center justify-center"
+                              onClick={() => setFormData({ ...formData, frequency: freq })}
+                            >
+                              {freq.replace("-", " ")}
+                            </Button>
+                          ))}
+                        </div>
+                      </div>
+                      {formData.frequency === "weekly" && (
                         <div className="mt-4 space-y-2">
                           <p className="font-semibold text-gray-700 font-inter">Select Days:</p>
-                          {['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'].map((day) => (
+                          {["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"].map((day) => (
                             <div key={day} className="flex items-center space-x-2">
                               <Checkbox
                                 id={day}
                                 checked={formData.weeklyDays.includes(day)}
                                 onCheckedChange={() => handleWeeklyDaysChange(day)}
                               />
-                              <label htmlFor={day} className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70 font-poppin">
+                              <label
+                                htmlFor={day}
+                                className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70 font-poppin"
+                              >
                                 {day}
                               </label>
                             </div>
@@ -147,7 +154,7 @@ const Commitment = () => {
 
                 {/* Duration */}
                 <div>
-                  <div 
+                  <div
                     className="flex justify-between items-center p-3 bg-gray-100 rounded-md cursor-pointer"
                     onClick={() => setIsDurationExpanded(!isDurationExpanded)}
                   >
@@ -159,11 +166,16 @@ const Commitment = () => {
                       <Popover>
                         <PopoverTrigger asChild>
                           <Button
-                            variant={"outline"}
+                            type="button"
+                            variant="outline"
                             className={`w-full justify-start text-left font-normal ${!formData.endDate && "text-muted-foreground"}`}
                           >
                             <CalendarIcon className="mr-2 h-4 w-4" />
-                            {formData.endDate ? format(new Date(formData.endDate), "PPP") : <span>Pick an end date</span>}
+                            {formData.endDate ? (
+                              format(new Date(formData.endDate), "PPP")
+                            ) : (
+                              <span>Pick an end date</span>
+                            )}
                           </Button>
                         </PopoverTrigger>
                         <PopoverContent className="w-auto p-0">
@@ -187,8 +199,8 @@ const Commitment = () => {
         </CardContent>
       </Card>
     </div>
-  );
-};
+  )
+}
 
-export default Commitment;
+export default Commitment
 
