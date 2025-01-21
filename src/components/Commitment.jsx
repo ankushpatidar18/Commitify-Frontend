@@ -7,7 +7,7 @@ import { Checkbox } from "@/components/ui/checkbox"
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover"
 import { format } from "date-fns"
 import { CalendarIcon, ChevronDownIcon, ChevronUpIcon } from "lucide-react"
-import CustomCalendar from '../components/ui/calendar';
+import CustomCalendar from "../components/ui/calendar"
 
 const Commitment = () => {
   const [formData, setFormData] = useState({
@@ -26,10 +26,12 @@ const Commitment = () => {
   }
 
   const handleWeeklyDaysChange = (day) => {
-    const updatedDays = formData.weeklyDays.includes(day)
-      ? formData.weeklyDays.filter((d) => d !== day)
-      : [...formData.weeklyDays, day]
-    setFormData({ ...formData, weeklyDays: updatedDays })
+    setFormData((prevData) => ({
+      ...prevData,
+      weeklyDays: prevData.weeklyDays.includes(day)
+        ? prevData.weeklyDays.filter((d) => d !== day)
+        : [...prevData.weeklyDays, day],
+    }))
   }
 
   const handleSubmit = async (e) => {
@@ -129,23 +131,48 @@ const Commitment = () => {
                         </div>
                       </div>
                       {formData.frequency === "weekly" && (
-                        <div className="mt-4 space-y-2">
-                          <p className="font-semibold text-gray-700 font-inter">Select Days:</p>
-                          {["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"].map((day) => (
-                            <div key={day} className="flex items-center space-x-2">
-                              <Checkbox
-                                id={day}
-                                checked={formData.weeklyDays.includes(day)}
-                                onCheckedChange={() => handleWeeklyDaysChange(day)}
-                              />
-                              <label
-                                htmlFor={day}
-                                className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70 font-poppin"
-                              >
-                                {day}
-                              </label>
+                        <div className="mt-4">
+                          <div className="flex flex-col md:flex-row justify-between items-start">
+                            <div className="w-full md:w-1/3 mb-2 md:mb-0">
+                              <p className="text-sm text-gray-600 font-poppin">Choose your days</p>
+                              <p className="text-sm text-gray-500 italic">Eg. "Mo, We & Su"</p>
                             </div>
-                          ))}
+                            <div className="w-full md:w-2/3 flex flex-wrap justify-start gap-2">
+                              {["Mo", "Tu", "We", "Th", "Fr", "Sa", "Su"].map((day, index) => (
+                                <Button
+                                  key={day}
+                                  type="button"
+                                  variant={
+                                    formData.weeklyDays.includes(
+                                      ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"][
+                                        index
+                                      ],
+                                    )
+                                      ? "default"
+                                      : "outline"
+                                  }
+                                  className={`w-10 h-10 rounded-full p-0 flex items-center justify-center ${
+                                    formData.weeklyDays.includes(
+                                      ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"][
+                                        index
+                                      ],
+                                    )
+                                      ? "bg-[#8046F3] text-white"
+                                      : "bg-white text-gray-700"
+                                  }`}
+                                  onClick={() =>
+                                    handleWeeklyDaysChange(
+                                      ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"][
+                                        index
+                                      ],
+                                    )
+                                  }
+                                >
+                                  {day}
+                                </Button>
+                              ))}
+                            </div>
+                          </div>
                         </div>
                       )}
                     </div>
@@ -163,28 +190,36 @@ const Commitment = () => {
                   </div>
                   {isDurationExpanded && (
                     <div className="mt-3 p-3 bg-white rounded-md shadow-sm">
-                      <Popover>
-                        <PopoverTrigger asChild>
-                          <Button
-                            type="button"
-                            variant="outline"
-                            className={`w-full justify-start text-left font-normal ${!formData.endDate && "text-muted-foreground"}`}
-                          >
-                            <CalendarIcon className="mr-2 h-4 w-4" />
-                            {formData.endDate ? (
-                              format(new Date(formData.endDate), "PPP")
-                            ) : (
-                              <span>Pick an end date</span>
-                            )}
-                          </Button>
-                        </PopoverTrigger>
-                        <PopoverContent className="w-auto p-0">
-                          <CustomCalendar
-                            selectedDate={formData.endDate ? new Date(formData.endDate) : new Date()}
-                            onChange={(date) => setFormData({ ...formData, endDate: date.toISOString() })}
-                          />
-                        </PopoverContent>
-                      </Popover>
+                      <div className="flex flex-col md:flex-row justify-between items-start">
+                        <div className="w-full md:w-1/3 mb-2 md:mb-0">
+                          <p className="text-sm text-gray-600 font-poppin">Choose your end date</p>
+                          <p className="text-sm text-gray-500 italic">Decide how long you want to commit.</p>
+                        </div>
+                        <div className="w-full md:w-2/3">
+                          <Popover>
+                            <PopoverTrigger asChild>
+                              <Button
+                                type="button"
+                                variant="outline"
+                                className={`w-full justify-start text-left font-normal ${!formData.endDate && "text-muted-foreground"}`}
+                              >
+                                <CalendarIcon className="mr-2 h-4 w-4" />
+                                {formData.endDate ? (
+                                  format(new Date(formData.endDate), "PPP")
+                                ) : (
+                                  <span>Pick an end date</span>
+                                )}
+                              </Button>
+                            </PopoverTrigger>
+                            <PopoverContent className="w-auto p-0">
+                              <CustomCalendar
+                                selectedDate={formData.endDate ? new Date(formData.endDate) : new Date()}
+                                onChange={(date) => setFormData({ ...formData, endDate: date.toISOString() })}
+                              />
+                            </PopoverContent>
+                          </Popover>
+                        </div>
+                      </div>
                     </div>
                   )}
                 </div>
