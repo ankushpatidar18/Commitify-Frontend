@@ -40,7 +40,7 @@ const Dashboard = () => {
         {/* Motivational Quote */}
         <div className="bg-green-100 p-4 rounded shadow">
           <p className="italic text-center">
-            "Commitment leads to action. Action brings your dream closer."
+            have to take input from the user so that they can setup message according to them
           </p>
         </div>
 
@@ -100,7 +100,7 @@ const Dashboard = () => {
             <div className="w-1/2 flex justify-center">
               <div className="relative">
                 <div className="w-32 h-32 rounded-full border-8 border-green-500 flex items-center justify-center">
-                  <p className="text-lg font-bold">{(getCancelledCount()+getCompletedCount()) && (getCompletedCount()/(getCancelledCount()+getCompletedCount()))*100}%</p>
+                  <p className="text-lg font-bold">{(getCancelledCount()+getCompletedCount()) && parseInt((getCompletedCount()/(getCancelledCount()+getCompletedCount()))*100)}%</p>
                 </div>
               </div>
             </div>
@@ -122,7 +122,7 @@ const Dashboard = () => {
             <div className="w-1/2 flex justify-center">
               <div className="relative">
                 <div className="w-32 h-32 rounded-full border-8 border-blue-500 flex items-center justify-center">
-                  <p className="text-lg font-bold">{(getCompletedcount()/(getCancelledcount()+getCompletedcount()))*100}%</p>
+                  <p className="text-lg font-bold">{parseInt((getCompletedcount()/(getCancelledcount()+getCompletedcount()))*100)}%</p>
                 </div>
               </div>
             </div>

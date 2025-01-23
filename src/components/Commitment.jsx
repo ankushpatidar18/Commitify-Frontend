@@ -83,7 +83,7 @@ const Commitment = () => {
                     <div className="mt-3 p-3 bg-white rounded-md shadow-sm">
                       <div className="flex flex-col md:flex-row justify-between items-start">
                         <div className="w-full md:w-1/3 mb-2 md:mb-0">
-                          <p className="text-sm text-gray-600 font-poppin">Name your commitment</p>
+                          <p className="text-sm font-semibold text-gray-600 font-poppin">Name your commitment</p>
                           <p className="text-sm text-gray-500 italic">Eg. "Doing Yoga"</p>
                         </div>
                         <Input
@@ -113,7 +113,7 @@ const Commitment = () => {
                     <div className="mt-3 p-3 bg-white rounded-md shadow-sm">
                       <div className="flex flex-col md:flex-row justify-between items-start">
                         <div className="w-full md:w-1/3 mb-2 md:mb-0">
-                          <p className="text-sm text-gray-600 font-poppin">Choose your frequency</p>
+                          <p className="text-sm font-semibold text-gray-600 font-poppin">Choose your frequency</p>
                           <p className="text-sm text-gray-500 italic">Eg. "Daily"</p>
                         </div>
                         <div className="w-full md:w-2/3 flex flex-col md:flex-row space-y-2 md:space-y-0 md:space-x-2">
@@ -134,7 +134,7 @@ const Commitment = () => {
                         <div className="mt-4">
                           <div className="flex flex-col md:flex-row justify-between items-start">
                             <div className="w-full md:w-1/3 mb-2 md:mb-0">
-                              <p className="text-sm text-gray-600 font-poppin">Choose your days</p>
+                              <p className="text-sm font-semibold text-gray-600 font-poppin">Choose your days</p>
                               <p className="text-sm text-gray-500 italic">Eg. "Mo, We & Su"</p>
                             </div>
                             <div className="w-full md:w-2/3 flex flex-wrap justify-start gap-2">
@@ -192,7 +192,7 @@ const Commitment = () => {
                     <div className="mt-3 p-3 bg-white rounded-md shadow-sm">
                       <div className="flex flex-col md:flex-row justify-between items-start">
                         <div className="w-full md:w-1/3 mb-2 md:mb-0">
-                          <p className="text-sm text-gray-600 font-poppin">Choose your end date</p>
+                          <p className="text-sm font-semibold text-gray-600 font-poppin">Choose your end date</p>
                           <p className="text-sm text-gray-500 italic">Decide how long you want to commit.</p>
                         </div>
                         <div className="w-full md:w-2/3">
