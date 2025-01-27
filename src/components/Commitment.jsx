@@ -49,7 +49,7 @@ const Commitment = () => {
   }
 
   return (
-    <div className="flex justify-center items-start min-h-screen bg-gradient-to-b from-gray-50 to-white p-6">
+    <div className="flex justify-center items-start  bg-gradient-to-b from-gray-50 to-white p-6">
       <Card className="w-full max-w-4xl shadow-lg">
         <CardContent className="p-6">
           <div className="flex flex-col md:flex-row">

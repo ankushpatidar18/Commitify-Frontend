@@ -59,9 +59,6 @@ const CommitmentList = () => {
   return (
     <div className="container mx-auto">
       <Card className="w-full max-w-4xl mx-auto">
-        <CardHeader>
-          <CardTitle className="text-3xl font-bold text-center mb-4">Your Commitments</CardTitle>
-        </CardHeader>
         <CardContent>
           <ScrollArea className="h-[600px] w-full rounded-md border p-4">
             {commitments.length === 0 ? (
