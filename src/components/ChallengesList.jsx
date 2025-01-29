@@ -91,7 +91,7 @@ const ChallengesList = () => {
           </CardContent>
         </Card>
       </div>
-      <JoinedChallengeList />
+      
     </>
   )
 }

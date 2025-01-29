@@ -12,6 +12,7 @@ import Leaderboard from './Leaderboard';
 import CommitmentList from './CommitmentList';
 import Challenge from './Challenge';
 import ChallengesList from './ChallengesList';
+import JoinedChallengeList from './JoinedChallengeList';
 
 const MainApp = () => {
     const appRouter = createBrowserRouter([
@@ -58,6 +59,7 @@ const MainApp = () => {
                   <PrivateRoute>
                 <Challenge />
                 <ChallengesList/>
+                <JoinedChallengeList />
                 </PrivateRoute>
                 )
               }
