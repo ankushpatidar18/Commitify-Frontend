@@ -57,8 +57,11 @@ const CommitmentList = () => {
   }
 
   return (
-    <div className="container mx-auto">
+    <div className="container mx-auto px-4 py-8">
       <Card className="w-full max-w-4xl mx-auto">
+        <CardHeader>
+                  <CardTitle className="text-3xl font-bold text-center">Joined Commitments</CardTitle>
+                </CardHeader>
         <CardContent>
           <ScrollArea className="h-[600px] w-full rounded-md border p-4">
             {commitments.length === 0 ? (
