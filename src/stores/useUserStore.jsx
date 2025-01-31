@@ -1,39 +1,65 @@
-import { create } from 'zustand';
-import { persist } from 'zustand/middleware';
+import { create } from "zustand"
+import { persist } from "zustand/middleware"
+import axios from "axios" // Make sure axios is installed and imported
 
 const useUserStore = create(
   persist(
-    (set) => ({
+    (set, get) => ({
       user: null,
       isAuthenticated: false,
       token: null,
-      rank: null, // Add rank property
-      
+      rank: null,
+
       setUser: (userData) =>
-        set({ 
+        set({
           user: userData,
           isAuthenticated: !!userData,
         }),
-      
-      setToken: (token) =>
-        set({ token }),
-      
-      setRank: (rank) => set({ rank }), // Add setRank method
-      
+
+      setToken: (token) => set({ token }),
+
+      setRank: (rank) => set({ rank }),
+
       logout: () => {
-        localStorage.removeItem('authToken');
-        set({ 
-          user: null,
-          isAuthenticated: false,
-          token: null,
-          rank: null, // Reset rank on logout
-        }, true);
+        localStorage.removeItem("authToken")
+        set(
+          {
+            user: null,
+            isAuthenticated: false,
+            token: null,
+            rank: null,
+          },
+          true,
+        )
+      },
+
+      // New method to refresh user data
+      refreshUserData: async () => {
+        try {
+          const token = get().token || localStorage.getItem("authToken")
+          if (!token) {
+            console.error("No token found")
+            return
+          }
+
+          const response = await axios.get("http://localhost:3000/auth/user", {
+            headers: { Authorization: `Bearer ${token}` },
+          })
+
+          set({
+            user: response.data,
+            isAuthenticated: true,
+          })
+        } catch (error) {
+          console.error("Error refreshing user data:", error)
+        }
       },
     }),
     {
-      name: 'user-storage',
-    }
-  )
-);
+      name: "user-storage",
+    },
+  ),
+)
 
-export default useUserStore;
+export default useUserStore
+

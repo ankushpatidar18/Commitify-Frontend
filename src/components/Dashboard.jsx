@@ -28,10 +28,12 @@ const Dashboard = () => {
         <CardContent className="p-6 flex flex-col space-y-6">
           {/* User Info */}
           <div className="flex items-center space-x-4">
-            <div className="w-16 h-16 rounded-full bg-purple-100 flex items-center justify-center">
-              <User className="w-8 h-8 text-purple-500" />
-            </div>
-            <div>
+          <img
+            src={'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTF0Ha8_yqcioV7zGcUuEdYQN8cAC9BkJ3Kag&s' || user?.profilePicture}
+            alt="User"
+            className="w-16 h-16 rounded-full object-cover"
+          />
+          <div>
               <p className="text-lg font-semibold">Happy {currentDay}!</p>
               <p className="text-sm text-gray-700">{user?.name}</p>
             </div>
