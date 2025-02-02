@@ -67,11 +67,11 @@ const CommitmentList = () => {
     <div className="container mx-auto px-4 py-8">
       <Card className="w-full max-w-4xl mx-auto">
         <CardHeader>
-          <CardTitle className="text-3xl font-bold text-center mb-4 text-[#8046F3]">Your Commitments</CardTitle>
+          <CardTitle className="text-3xl font-bold text-center ">Joined Commitments</CardTitle>
         </CardHeader>
         <CardContent>
           <ScrollArea className="h-[600px] w-full rounded-md border p-4">
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div className="grid gap-4">
               {commitments.length === 0 ? (
                 <p className="text-center text-gray-500 col-span-2">Loading commitments...</p>
               ) : (

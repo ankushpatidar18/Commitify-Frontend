@@ -1,6 +1,6 @@
 import { create } from "zustand"
 import { persist } from "zustand/middleware"
-import axios from "axios" // Make sure axios is installed and imported
+import axios from "axios" 
 
 const useUserStore = create(
   persist(
