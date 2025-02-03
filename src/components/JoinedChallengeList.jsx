@@ -8,6 +8,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
 import { ScrollArea } from "@/components/ui/scroll-area"
 import { ChevronDown, ChevronUp, CheckCircle, XCircle, TrophyIcon } from "lucide-react"
+import useUserStore from "../stores/useUserStore"
 
 const locales = {
   "en-US": enUS,
@@ -130,9 +131,10 @@ const JoinedChallengeList = () => {
                                       size="sm"
                                       variant="outline"
                                       className="mr-2"
-                                      onClick={() =>
-                                        updateChallengeProgress(challenge.challenge_id, event.start, "completed")
-                                      }
+                                      onClick={async () => {
+                                        await updateChallengeProgress(challenge.challenge_id, event.start, "completed")
+                                        await useUserStore.getState().refreshUserData()
+                                      }}
                                     >
                                       <CheckCircle className="w-4 h-4 mr-1" />
                                       Completed
@@ -140,9 +142,10 @@ const JoinedChallengeList = () => {
                                     <Button
                                       size="sm"
                                       variant="outline"
-                                      onClick={() =>
-                                        updateChallengeProgress(challenge.challenge_id, event.start, "failed")
-                                      }
+                                      onClick={async () => {
+                                        await updateChallengeProgress(challenge.challenge_id, event.start, "failed")
+                                        await useUserStore.getState().refreshUserData()
+                                      }}
                                     >
                                       <XCircle className="w-4 h-4 mr-1" />
                                       Failed
