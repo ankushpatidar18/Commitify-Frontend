@@ -1,13 +1,14 @@
-import React, { useEffect, useState } from "react"
+import { useEffect, useState } from "react"
 import axios from "axios"
-import JoinedChallengeList from "./JoinedChallengeList"
 import { Card, CardContent, CardHeader, CardTitle, CardFooter } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
 import { ScrollArea } from "@/components/ui/scroll-area"
 import { CalendarIcon, ClockIcon, UserIcon } from "lucide-react"
+import { useToast } from "@/hooks/use-toast"
 
 const ChallengesList = () => {
   const [challenges, setChallenges] = useState([])
+  const { toast } = useToast()
 
   useEffect(() => {
     const fetchChallenges = async () => {
@@ -19,11 +20,15 @@ const ChallengesList = () => {
         setChallenges(response.data)
       } catch (error) {
         console.error("Error fetching challenges:", error)
-        alert("Failed to load challenges. Try again.")
+        toast({
+          variant: "destructive",
+          title: "Error",
+          description: "Failed to load challenges. Please try again.",
+        })
       }
     }
     fetchChallenges()
-  }, [])
+  }, [toast])
 
   const joinChallenge = async (challengeId) => {
     try {
@@ -34,8 +39,25 @@ const ChallengesList = () => {
         { headers: { Authorization: `Bearer ${token}` } },
       )
       console.log("Joined successfully:", response.data)
+      toast({
+        title: "Success",
+        description: "You have successfully joined the challenge!",
+      })
     } catch (error) {
       console.error("Error joining challenge:", error)
+      if (error.response && error.response.status === 400 && error.response.data.message === "Already joined") {
+        toast({
+          // variant: "warning",
+          title: "Already Joined",
+          description: "You have already joined this challenge.",
+        })
+      } else {
+        toast({
+          variant: "destructive",
+          title: "Error",
+          description: "Failed to join the challenge. Please try again.",
+        })
+      }
     }
   }
 
@@ -58,7 +80,9 @@ const ChallengesList = () => {
                       className="bg-gradient-to-br from-purple-100 to-purple-200 overflow-hidden"
                     >
                       <CardHeader className="pb-2">
-                        <CardTitle className="text-xl font-semibold text-[#8046F3]">{(challenge.title).toUpperCase()}</CardTitle>
+                        <CardTitle className="text-xl font-semibold text-[#8046F3]">
+                          {challenge.title.toUpperCase()}
+                        </CardTitle>
                       </CardHeader>
                       <CardContent className="pb-2">
                         <div className="flex items-center text-sm text-gray-600 mb-2">
@@ -91,7 +115,6 @@ const ChallengesList = () => {
           </CardContent>
         </Card>
       </div>
-      
     </>
   )
 }

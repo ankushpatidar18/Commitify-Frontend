@@ -5,6 +5,7 @@ import AppLayout from './AppLayout';
 import Dashboard from './Dashboard';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import { Toaster } from "@/components/ui/toaster"
 import Auth from './Auth';
 import Commitment from './Commitment';
 import PrivateRoute from './PrivateRoute';
@@ -71,6 +72,7 @@ const MainApp = () => {
       <div className='#F2EFEF'>
     <RouterProvider router={appRouter} />
     <ToastContainer />
+    <Toaster />
       </div>
     )
   }
